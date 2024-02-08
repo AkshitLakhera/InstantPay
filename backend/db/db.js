@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema({
 
 //creating mongoose modal
  const User =  mongoose.Model("User",userSchema);
+ 
 //  Exporting mongoose modal
 module.exports= {
     User
