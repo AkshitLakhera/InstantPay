@@ -1,5 +1,9 @@
 const mongoose= require('mongoose');
-mongoose.connect('') //mongodb+srv://admin:18UnbuxKp5q8OEev@cluster0.f3e1pxb.mongodb.net/
+require('dotenv').config();
+mongoose.connect("mongodb+srv://admin:18UnbuxKp5q8OEev@cluster0.f3e1pxb.mongodb.net/", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }) 
 .then(()=>{console.log("connected to database")})
 .catch((err) => {
     console.log("Error",err)
@@ -35,7 +39,7 @@ const userSchema = new mongoose.Schema({
 })
 
 //creating mongoose modal
- const User =  mongoose.Model("User",userSchema);
+ const User =  mongoose.model("User",userSchema);
  
 //  Exporting mongoose modal
 module.exports= {
