@@ -1,8 +1,8 @@
 const express = require('express');
-import { z } from "zod";
-import jwt from 'jsonwebtoken';
-import { User } from "../db/db";
-import { JWT_SECRET } from "../config";
+const { z } = require('zod');;
+const jwt = require('jsonwebtoken');
+const User = require("../db/db")
+const JWT_SECRET = require("../config")
 const router = express.Router();
 //    Defining schemaas
 const userSchema = z.object({
@@ -27,31 +27,31 @@ router.post("/signup", async (req,res) => {
  if(!existingUser){
   return res.status(411).json({message: "Email already taken / Incorrect inputs"})
  } 
-
-})
-
-// creating user in database
+ // creating user in database
 
 const user = await User.create({
-username:req.body.username,
-firstName:req.body.firstName,
-lastName:req.body.lastName,
-password:req.body.password
+  username:req.body.username,
+  firstName:req.body.firstName,
+  lastName:req.body.lastName,
+  password:req.body.password
+  
+  })
+  const userId = user._id
+  
+  // To clarify why I am using userId here is as it is unqiue and this will help us to make unique token for each unique userId
+  const token = jwt.sign({userId},JWT_SECRET)
+  
+  
+  // returning jwt here
+  res.status(200).json({
+    message: "User created successfully",
+    token: "jwt"
+  })
 
-})
-const userId = user._id
-
-// To clarify why I am using userId here is as it is unqiue and this will help us to make unique token for each unique userId
-const token = jwt.sign({userId},JWT_SECRET)
-
-
-// returning jwt here
-res.status(200).json({
-	message: "User created successfully",
-	token: "jwt"
 })
 
 //      sign in route
+// While signin or  we can say login. this time too we have to genrate the json token so that we can use it in further subsequent request to server
 router.post("/signin",async (req,res)  => {
   const validateuser= userSchema.safeParse(req.body)
   if(!validateuser){
