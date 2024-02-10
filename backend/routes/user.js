@@ -50,6 +50,33 @@ res.status(200).json({
 	message: "User created successfully",
 	token: "jwt"
 })
+
+//      sign in route
+router.post("/signin",async (req,res)  => {
+  const validateuser= userSchema.safeParse(req.body)
+  if(!validateuser){
+   return  res.status(411).json({message: "Incorrect inputs"})
+  }
+  const isUser = await User.find({
+    username:req.body.username,
+    password:req.body.passsword
+  })
+  if (user) {
+    const token = jwt.sign({
+        userId: user._id
+    }, JWT_SECRET);
+
+    res.json({
+        token: token
+    })
+    return;
+}
+
+
+res.status(404).json({
+  messsage:"Error while loginin"
+})
+})
 module.exports={
   router
 }
