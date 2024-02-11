@@ -3,8 +3,8 @@ const { z } = require('zod');;
 const jwt = require('jsonwebtoken');
 const User = require("../db/db")
 const JWT_SECRET = require("../config")
-const router = express.Router();
 const authMiddlware = require("../middleware")
+const router = express.Router();
 //    Defining schemaas
 const userSchema = z.object({
   username:z.string().email(),
@@ -42,7 +42,7 @@ const user = await User.create({
   // To clarify why I am using userId here is as it is unqiue and this will help us to make unique token for each unique userId
   const token = jwt.sign({userId},JWT_SECRET)
   
-  
+
   // returning jwt here
   res.status(200).json({
     message: "User created successfully",
@@ -50,24 +50,23 @@ const user = await User.create({
   })
 
 })
-
 //      sign in route
 // While signin or  we can say login. this time too we have to genrate the json token so that we can use it in further subsequent request to server
 //    Sign in schema
-const signinbody = Zod.object({
+const signinbody = z.object({
   username:z.string().email(),
-  passsword:z.string().min(6),
+  password:z.string().min(6),
 })
 router.post("/signin",async (req,res)  => {
   const validateuser= signinbody.safeParse(req.body)
   if(!validateuser){
    return  res.status(411).json({message: "Incorrect inputs"})
   }
-  const isUser = await User.find({
+  const user = await User.find({
     username:req.body.username,
     password:req.body.passsword
   })
-  if (isUser) {
+  if (user) {
     const token = jwt.sign({
         userId: user._id
     }, JWT_SECRET);
@@ -85,11 +84,52 @@ res.status(404).json({
 })
 
 //        Route to update user information
+//  Update scehma zod
+
+const updateBody = z.object({
+  firstName:z.string().optional(),
+  lastName:z.string().optional(),
+  password:z.string().optional()
+})
 
 router.put("/",authMiddlware,async(req ,res) => {
-const password = req.password
-const firstName = req.firstName
-const lastName = req.lastName
+const validateuser = updateBody.safeParse(req.body)
+if (!validateuser){
+res.status(411).json({
+  message: "Error while updating information"
+})
+}
+// updateOne function in mongoose take id (unique) as input ,it identify which user we have to update
+await User.updateOne(req.body, {
+  _id: req.userId
+})
+res.json({
+  message: "Updated successfully"
+})
+})
+
+//      Route to get users from the backend, filterable via firstName/lastName
+//In Express.js, when you make a request with query parameters, they automatically become part of the URL and are visible. The req.query object in Express.js automatically parses these parameters from the URL for you to access and use in your server-side code.
+router.get("/bulk",async(req,res) => {
+ const filteredName= req.query.filter || "";
+ const users = await User.find({
+  $or : [{
+    firstName : {
+      "$regex":filteredName
+    },
+    lastName : {
+      "$regex" : lastName
+    }
+  }]
+ })
+ res.status(200).json({
+  user:users.map( user =>({
+    username: user.username,
+    firstName: user.firstName,
+    _id: user._id
+
+  }) )
+ })
 })
 module.exports={
   router
