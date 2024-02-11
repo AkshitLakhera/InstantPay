@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require("../db/db")
 const JWT_SECRET = require("../config")
 const router = express.Router();
+const authMiddlware = require("../middleware")
 //    Defining schemaas
 const userSchema = z.object({
   username:z.string().email(),
@@ -52,8 +53,13 @@ const user = await User.create({
 
 //      sign in route
 // While signin or  we can say login. this time too we have to genrate the json token so that we can use it in further subsequent request to server
+//    Sign in schema
+const signinbody = Zod.object({
+  username:z.string().email(),
+  passsword:z.string().min(6),
+})
 router.post("/signin",async (req,res)  => {
-  const validateuser= userSchema.safeParse(req.body)
+  const validateuser= signinbody.safeParse(req.body)
   if(!validateuser){
    return  res.status(411).json({message: "Incorrect inputs"})
   }
@@ -61,7 +67,7 @@ router.post("/signin",async (req,res)  => {
     username:req.body.username,
     password:req.body.passsword
   })
-  if (user) {
+  if (isUser) {
     const token = jwt.sign({
         userId: user._id
     }, JWT_SECRET);
@@ -76,6 +82,14 @@ router.post("/signin",async (req,res)  => {
 res.status(404).json({
   messsage:"Error while loginin"
 })
+})
+
+//        Route to update user information
+
+router.put("/",authMiddlware,async(req ,res) => {
+const password = req.password
+const firstName = req.firstName
+const lastName = req.lastName
 })
 module.exports={
   router
