@@ -92,7 +92,7 @@ const updateBody = z.object({
   password:z.string().optional()
 })
 
-router.put("/",authMiddlware,async(req ,res) => {
+router.put('/',authMiddlware,async(req ,res) => {
 const validateuser = updateBody.safeParse(req.body)
 if (!validateuser){
 res.status(411).json({
@@ -131,6 +131,4 @@ router.get("/bulk",async(req,res) => {
   }) )
  })
 })
-module.exports={
-  router
-}
+module.exports = router;

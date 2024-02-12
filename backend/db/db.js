@@ -8,7 +8,7 @@ mongoose.connect("mongodb+srv://admin:18UnbuxKp5q8OEev@cluster0.f3e1pxb.mongodb.
 .catch((err) => {
     console.log("Error",err)
 })
-// Creating mongoose schema
+// Creating mongoose user schema
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -37,11 +37,25 @@ const userSchema = new mongoose.Schema({
         minLength:6
     }
 })
+// Mongoose schema for account
+const accountSchema = new mongoose.Schema({
+    balance:{
+        type:Number,
+        default:0.0, //You can set default value if needed
+        required:true
+    },
+    userId : {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true
+    }
 
+})
 //creating mongoose modal
  const User =  mongoose.model("User",userSchema);
- 
+ const Account = mongoose.model("Account",accountSchema);
 //  Exporting mongoose modal
 module.exports= {
-    User
+    User,
+    Account
 }
