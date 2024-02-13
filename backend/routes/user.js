@@ -38,6 +38,11 @@ const user = await User.create({
   
   })
   const userId = user._id
+//  creating a account for user who sign-up
+await User.create({
+  userId,
+  balance:1 * Math.random * 1000
+})
   
   // To clarify why I am using userId here is as it is unqiue and this will help us to make unique token for each unique userId
   const token = jwt.sign({userId},JWT_SECRET)
