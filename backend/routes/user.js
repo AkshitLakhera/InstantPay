@@ -1,10 +1,11 @@
 const express = require('express');
+const router = express.Router();
 const { z } = require('zod');;
 const jwt = require('jsonwebtoken');
-const User = require("../db/db")
-const JWT_SECRET = require("../config")
-const authMiddlware = require("../middleware")
-const router = express.Router();
+const {User,Account} = require("../db")
+const JWT_SECRET = require("../config");
+const { authMiddleware } = require('../middleware');
+
 //    Defining schemaas
 const userSchema = z.object({
   username:z.string().email(),
@@ -14,8 +15,6 @@ const userSchema = z.object({
 
 })
 // After completing I will  add password hashing in this project as every passsword which get saved in data based properly hasded 
-
-
 
 //             Sign up  
 router.post("/signup", async (req,res) => {
@@ -39,9 +38,9 @@ const user = await User.create({
   })
   const userId = user._id
 //  creating a account for user who sign-up
-await User.create({
+await Account.create({
   userId,
-  balance:1 * Math.random * 1000
+  balance:1 + Math.random * 1000
 })
   
   // To clarify why I am using userId here is as it is unqiue and this will help us to make unique token for each unique userId
@@ -51,7 +50,7 @@ await User.create({
   // returning jwt here
   res.status(200).json({
     message: "User created successfully",
-    token: "jwt"
+    token: token
   })
 
 })
@@ -97,7 +96,7 @@ const updateBody = z.object({
   password:z.string().optional()
 })
 
-router.put('/',authMiddlware,async(req ,res) => {
+router.put('/',authMiddleware,async(req ,res) => {
 const validateuser = updateBody.safeParse(req.body)
 if (!validateuser){
 res.status(411).json({
