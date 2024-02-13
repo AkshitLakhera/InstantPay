@@ -1,8 +1,6 @@
 const mongoose= require('mongoose');
 require('dotenv').config();
-mongoose.connect("mongodb+srv://admin:18UnbuxKp5q8OEev@cluster0.f3e1pxb.mongodb.net/", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+mongoose.connect("mongodb+srv://admin:18UnbuxKp5q8OEev@cluster0.f3e1pxb.mongodb.net/paytm", {
   }) 
 .then(()=>{console.log("connected to database")})
 .catch((err) => {
@@ -40,8 +38,7 @@ const userSchema = new mongoose.Schema({
 // Mongoose schema for account
 const accountSchema = new mongoose.Schema({
     balance:{
-        type:Number,
-        default:0.0, //You can set default value if needed
+        type:Number, //You can set default value if needed
         required:true
     },
     userId : {
