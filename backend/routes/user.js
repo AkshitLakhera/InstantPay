@@ -125,7 +125,7 @@ router.get("/bulk", async (req, res) => {
           $regex: filteredName,
         },
         lastName: {
-          $regex: lastName,
+          $regex: filteredName,
         },
       },
     ],
@@ -134,8 +134,14 @@ router.get("/bulk", async (req, res) => {
     user: users.map((user) => ({
       username: user.username,
       firstName: user.firstName,
+      lastName:user.lastName,
       _id: user._id,
     })),
   });
 });
+router.get('/currentUser',authMiddleware,async(req,res)=>{
+  const userId=req.userId;
+  const user= await User.findOne({_id:userId});
+  return res.json({firstName:user.firstName});
+})
 module.exports = router;

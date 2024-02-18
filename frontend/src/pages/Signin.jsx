@@ -12,6 +12,21 @@ export const Signin = () => {
   const navigate = useNavigate();
   const [username,setUserName] =useState("");
   const [password,setPassword] =useState("");
+  const handleSignin = async function () {
+    try {
+      const postData = {
+        username,
+        password
+      }
+      const response = await axios.post("http://localhost:3000/api/v1/user/signin",postData);
+      window.localStorage.setItem("Authorization","Bearer "+response.data.token)
+      navigate("/dashboard");
+    }catch (error) {
+      // Handle Axios error and display user-friendly message
+      console.error("Signin error:", error);
+      // Display appropriate error message to the user based on error.response.data
+    }
+  }
     return <div className="bg-slate-300 h-screen flex justify-center">
     <div className="flex flex-col justify-center">
       <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
@@ -20,12 +35,7 @@ export const Signin = () => {
         <InputBox onChange={(e) => {setUserName(e.target.value)}}   placeholder="harkirat@gmail.com" label={"Email"} />
         <InputBox onChange= {(e)  =>   {setPassword(e.target.value)}}   placeholder="123456" label={"Password"} />
         <div className="pt-4">
-          <Button label={"Sign in"}  onClick={ async () => {
-            const postData = {username ,password}
-            const response=await axios.post("http://localhost:3000/api/v1/user/signin",postData);
-            window.localStorage.setItem("Authorization","Bearer "+response.data.token)
-            navigate("/dashboard");
-          }}/>
+          <Button label={"Sign in"}  onClick={handleSignin}/>
         </div>
         <BottomWarning label={"Don't have an account?"} buttonText={"Sign up"} to={"/signup"} />
       </div>
