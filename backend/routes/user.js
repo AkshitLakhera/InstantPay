@@ -139,9 +139,18 @@ router.get("/bulk", async (req, res) => {
     })),
   });
 });
-router.get('/currentUser',authMiddleware,async(req,res)=>{
-  const userId=req.userId;
-  const user= await User.findOne({_id:userId});
-  return res.json({firstName:user.firstName});
-})
+router.get('/currentUser', authMiddleware, async (req, res) => {
+  const userId = req.userId;
+  console.log('userId:', userId); // Log userId to check if it's correct
+
+  const user = await User.findOne({ _id: userId });
+  console.log('user:', user); // Log user object to check if it's null or contains the expected user data
+
+  if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+  }
+
+  return res.json({ firstName: user.firstName });
+});
+
 module.exports = router;
