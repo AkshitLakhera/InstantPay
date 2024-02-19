@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 export const Balance = () => {
     const authHeader = window.localStorage.getItem('Authorization')
