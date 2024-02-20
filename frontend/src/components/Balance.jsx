@@ -8,7 +8,7 @@ export const Balance = () => {
     }
     const [balance,setBalance] =useState("");
     useEffect(() => {
-        // Corrected syntax here
+        // Corrected  written syntax here
         const fetchData = async () => {
           try {
             const response = await axios.get('http://localhost:3000/api/v1/account/balance', { headers });
