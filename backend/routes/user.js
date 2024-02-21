@@ -117,15 +117,15 @@ router.put("/", authMiddleware, async (req, res) => {
 //      Route to get users from the backend, filterable via firstName/lastName
 //In Express.js, when you make a request with query parameters, they automatically become part of the URL and are visible. The req.query object in Express.js automatically parses these parameters from the URL for you to access and use in your server-side code.
 router.get("/bulk", async (req, res) => {
-  const filteredName = req.query.filter || "";
+  const filter = req.query.filter || "";
   const users = await User.find({
     $or: [
       {
         firstName: {
-          $regex: filteredName,
+          $regex: filter,
         },
         lastName: {
-          $regex: filteredName,
+          $regex: filter,
         },
       },
     ],
