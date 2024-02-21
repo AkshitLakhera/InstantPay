@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export const Appbar = () => {
-    // token copied to header
-    const authHeader = window.localStorage.getItem('Authorization')
-    const headers = {
-        'Authorization':authHeader
-    }
     const [currentUser,setCurrentUser] =useState();
     useEffect(() => {
         // Corrected syntax here
         const fetchData = async () => {
           try {
-            const res=await axios.get('http://localhost:3000/api/v1/user/currentUser', { headers });
+            const res=await axios.get('http://localhost:3000/api/v1/user/currentUser', {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            }                           
+            );
             setCurrentUser(res.data.firstName);
           } catch (error) {
             console.error("Error fetching data:", error);
