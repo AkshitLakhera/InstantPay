@@ -5,12 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 export const Users = () => {
     const [users, setUsers] = useState([]);
-    const [searchInput, setSearchInput] = useState("");
-
+    const [filter, setFilter] = useState("");
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + searchInput);
+                const response = await axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter);
                 setUsers(response.data.user);
             } catch (error) {
                 console.error("Error fetching users:", error);
@@ -18,7 +17,7 @@ export const Users = () => {
         };
 
         fetchUsers();
-    }, [searchInput]);
+    }, [filter]);
 
     return (
         <>
@@ -27,8 +26,8 @@ export const Users = () => {
             </div>
             <div className="my-2">
                 <input
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    value={searchInput}
+                    onChange={(e) => setFilter(e.target.value)}
+                    value={filter}
                     type="text"
                     placeholder="Search users..."
                     className="w-full px-2 py-1 border rounded border-slate-200"

@@ -5,6 +5,7 @@ import { Signin } from "./pages/Signin";
 import { Dashboard } from "./pages/Dashboard";
 import { SendMoney } from "./pages/SendMoney";
 import Landing from './components/Landinpage';
+import Confirmation from './components/confirmation';
 function App() {
   return (
     <BrowserRouter>
@@ -14,6 +15,8 @@ function App() {
       <Route path='/signin' element= {<Signin/>} />
       <Route path='/dashboard' element= {<Dashboard/>} />
       <Route path='/send' element= {<SendMoney/>} />
+      <Route path='/confirmation' element= {<Confirmation/>} />
+
     </Routes>
     </BrowserRouter>
 
