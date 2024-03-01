@@ -1,5 +1,6 @@
 /* custom.css */
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 /* Styles for the main container */
 .main_container {
     max-width: 1550px; /* Limit the width of the container */
@@ -28,10 +29,25 @@
   .m_header {
     margin-bottom: 20px; /* Add some space below the header */
   }
+   .m_header h1{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 803;
+    font-style: normal;
+    font-size: 4rem;
+    
+    
+   }
   
   /* Styles for the main content paragraph */
   .m_para {
     margin-bottom: 20px; /* Add some space below the paragraph */
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5rem;
+    margin-top:40px ;
+    
   }
   
   /* Styles for the "Get Started" button */
@@ -47,11 +63,8 @@
     padding: 20px; /* Add some padding */
     background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
     border-radius: 5px; /* Add border radius */
-    text-align: center; /* Center the text horizontally */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  
+    
   }
   
   /* Styles for the image container */
