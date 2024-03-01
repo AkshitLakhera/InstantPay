@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "../custom.css"
+import image from "../assets/banking.jpg"
 export default function Landing() {
     const navigate=useNavigate();
     return (
@@ -38,7 +39,9 @@ export default function Landing() {
           <button>Get Started </button>
 
         </div>
-        <div className="m_img"></div>
+        <div className="m_img">
+          <img src={image} alt="" />
+        </div>
       </div>
 
       </div>
