@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 /* Styles for the main container */
 .main_container {
-    max-width: 1550px; /* Limit the width of the container */
+    max-width: 1800px; /* Limit the width of the container */
     margin: 0 auto; /* Center the container horizontally */
   }
   
@@ -74,9 +74,7 @@
   
   /* Styles for the image */
   .m_img img {
-    width: 100%; /* Make the image responsive and fill its container */
-    border-radius: 5px; /* Add border radius for a rounded look */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    width: 80%; /* Make the image responsive and fill its container */
   }
   /* get started button  */
   .arrow-button {
@@ -130,3 +128,7 @@
 .arrow-button:hover {
     color: #fff;
 }
+ /*                                             Logo  css                                        */
+ .logo {
+  cursor: pointer;
+ }
