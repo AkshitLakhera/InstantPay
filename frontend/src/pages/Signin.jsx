@@ -1,3 +1,4 @@
+import "../custom.css"
 import { useState} from "react"
 import { BottomWarning } from "../components/BottomWarning"
 import { Button } from "../components/Button"
@@ -7,6 +8,7 @@ import { SubHeading } from "../components/SubHeading"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
+import  signin_img  from "../assets/singin.jpg"
 
 
 
@@ -29,11 +31,16 @@ export const Signin = () => {
       // Display appropriate error message to the user based on error.response.data
     }
   }
-    return  <div className="main_container "> 
+    return  <div className="main_container  "> 
     <Navbar/>
-    <div className="bg-swhite-300 h-screen flex justify-center">
-    <div className="flex flex-col justify-center">
-      <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
+    <div className="sigin_ui  flex w-full items-center">
+      {/* img code */}
+      <div className="sigin-img w-1/2">
+        <img className="sigin_img mt-11 w-full h-full object-cover" src={signin_img} alt="" />
+      </div>
+      {/* form code */}
+    <div className="bg-white-300 w-1/2 ">
+      <div className="rounded-lg bg-white  text-center">
         <Heading label={"Sign in"} />
         <SubHeading label={"Enter your credentials to access your account"} />
         <InputBox onChange={(e) => {setUserName(e.target.value)}}   placeholder="harkirat@gmail.com" label={"Email"} />
@@ -46,4 +53,5 @@ export const Signin = () => {
     </div>
   </div>
   </div>
+ 
   }

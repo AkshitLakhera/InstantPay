@@ -57,6 +57,7 @@
     color: #ffffff; /* Set text color */
     border: none; /* Remove border */
     border-radius: 5px; /* Add border radius */
+    margin-top:3rem ;
     cursor: pointer; /* Change cursor to pointer on hover */
   }
   .m_content {
@@ -132,3 +133,8 @@
  .logo {
   cursor: pointer;
  }
+ /*                                          singin page                                        */
+ .sigin_img{
+  width: 50%
+ };
+ 
