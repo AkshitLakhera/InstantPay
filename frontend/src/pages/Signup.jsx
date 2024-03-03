@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import loginimg from "../assets/login.jpg"
+import PasswordInput from "../components/PasswordInput"
 export const Signup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -66,14 +67,18 @@ export const Signup = () => {
           setLastName(e.target.value);
         }} placeholder="Doe" label={"Last Name"} />
 
-        <InputBox onChange={e => {
+        <InputBox  onChange={e => {
           
           setUsername(e.target.value);
-        }} placeholder="harkirat@gmail.com" label={"Email"} />
+        }} placeholder="akshit@gmail.com" label={"Email"} />
 
-        <InputBox onChange={(e) => {
+        <PasswordInput onChange={(e) => {
           setPassword(e.target.value)
-        }} placeholder="123456" label={"Password"} />
+        }} placeholder="Enter Password"  label={"Password"}/>
+         
+        {/* <InputBox onChange={(e) => {
+          setPassword(e.target.value)
+        }} placeholder="123456" label={"Password"} /> */}
 
 
         <div className="pt-4">

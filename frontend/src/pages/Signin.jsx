@@ -9,6 +9,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import  signin_img  from "../assets/singin.jpg"
+import PasswordInput from "../components/PasswordInput"
 
 
 
@@ -44,7 +45,9 @@ export const Signin = () => {
         <Heading label={"Sign in"}  />
         <SubHeading label={"Enter your credentials to access your account"} />
         <InputBox onChange={(e) => {setUserName(e.target.value)}}   placeholder="harkirat@gmail.com" label={"Email"} />
-        <InputBox onChange= {(e)  =>   {setPassword(e.target.value)}}   placeholder="123456" label={"Password"} />
+        <PasswordInput onChange={(e) => {
+          setPassword(e.target.value)
+        }} placeholder="Enter Password"  label={"Password"}/>
         <div className="pt-4">
           <Button label={"Sign in"}  onClick={handleSignin}/>
         </div>
