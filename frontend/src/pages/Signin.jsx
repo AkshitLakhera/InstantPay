@@ -36,12 +36,12 @@ export const Signin = () => {
     <div className="sigin_ui  flex w-full items-center">
       {/* img code */}
       <div className="sigin-img w-1/2">
-        <img className="sigin_img mt-11 w-full h-full object-cover" src={signin_img} alt="" />
+        <img className="sigin_img mt-11 w-full  object-cover " src={signin_img} alt="" />
       </div>
       {/* form code */}
     <div className="bg-white-300 w-1/2 ">
-      <div className="rounded-lg bg-white  text-center">
-        <Heading label={"Sign in"} />
+      <div className="rounded-lg bg-white  text-center shadow_md">
+        <Heading label={"Sign in"}  />
         <SubHeading label={"Enter your credentials to access your account"} />
         <InputBox onChange={(e) => {setUserName(e.target.value)}}   placeholder="harkirat@gmail.com" label={"Email"} />
         <InputBox onChange= {(e)  =>   {setPassword(e.target.value)}}   placeholder="123456" label={"Password"} />

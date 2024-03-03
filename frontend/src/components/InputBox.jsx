@@ -1,8 +1,7 @@
-import React from 'react'
-
+/* eslint-disable react/prop-types */
 export const InputBox = ({label,placeholder ,onChange}) => {
   return (
-    <div>
+    <div className="input_box">
        <div className="text-sm font-medium text-left py-2">
         {label}
       </div>

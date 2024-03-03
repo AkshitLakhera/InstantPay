@@ -2,7 +2,7 @@ import React from 'react'
 
 export const SubHeading = ({label}) => {
   return (
-    <div  className="text-slate-500 text-md pt-1 px-4 pb-4">
+    <div  className="text-slate-500 text-md pt-1 px-4 pb-4 subheading_comp">
         {label}
         </div>
   )

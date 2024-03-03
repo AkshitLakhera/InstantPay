@@ -11,7 +11,7 @@
   .main_header {
     padding: 20px; /* Add some padding to the header */
     background-color: #ffffff; /* Set a background color */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); Add a subtle shadow */
   }
   
   /* Styles for the main content container */
@@ -129,12 +129,37 @@
 .arrow-button:hover {
     color: #fff;
 }
+/*                                heading                        */
+
+.header_comp {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+/* input box                        */
+.input_box{
+  margin:2rem;
+}
  /*                                             Logo  css                                        */
  .logo {
   cursor: pointer;
  }
  /*                                          singin page                                        */
- .sigin_img{
-  width: 50%
- };
+
  
+.sigin_img {
+  height:75vh;
+}
+.shadow_md {
+  box-shadow: 0px 5px 15px rgba(255, 79, 90, 0.2), 0px 10px 20px rgba(255, 79, 90, 0.1);
+  transition: box-shadow 0.3s ease-in-out; /* Add transition properties */
+  width: 50%;
+  margin-left: 8rem;
+  padding: 2.5rem;
+}
+.shadow_md:hover{
+  box-shadow: 0px 5px 15px rgba(255, 79, 90, 0.4), 0px 10px 20px rgba(255, 79, 90, 0.2);
+}
