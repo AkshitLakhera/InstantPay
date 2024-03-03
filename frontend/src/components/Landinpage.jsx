@@ -1,7 +1,12 @@
 import "../custom.css"
 import image from "../assets/banking.jpg"
 import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
 export default function Landing() {
+  const navigate = useNavigate();
+  const handleOnGetstarted = () => {
+  navigate("/signin")
+  }
     return (
        <div className="main_container ">
         {/* navigation bar */}
@@ -13,7 +18,7 @@ export default function Landing() {
             <h1>Build Payment Gateways Trust With UpTrack Intellgence</h1>
           </div>
           <div className="m_para"><p>Establish Trust with payment Gateway By Synchronizing Shipment information.</p></div>
-          <button className="arrow-button bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">Get Started <span className="arrow"></span>
+          <button onClick={handleOnGetstarted} className="arrow-button bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">Get Started <span className="arrow"></span>
 </button>
 
 
