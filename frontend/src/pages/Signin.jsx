@@ -35,8 +35,8 @@ export const Signin = () => {
     <Navbar/>
     <div className="sigin_ui  flex w-full items-center">
       {/* img code */}
-      <div className="sigin-img w-1/2">
-        <img className="sigin_img mt-11 w-full  object-cover " src={signin_img} alt="" />
+      <div className="form-img w-1/2">
+        <img className="form_img mt-11 w-full  object-cover " src={signin_img} alt="" />
       </div>
       {/* form code */}
     <div className="bg-white-300 w-1/2 ">

@@ -7,7 +7,7 @@ import { SubHeading } from "../components/SubHeading"
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
-
+import loginimg from "../assets/login.jpg"
 export const Signup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -46,9 +46,13 @@ export const Signup = () => {
     
     return <div className="main_container "> 
     <Navbar/>
-     <div className="bg-white-300 h-screen flex justify-center">
-    <div className="flex flex-col justify-center">
-      <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
+     <div className="sigup_ui  flex w-full items-center">
+     <div className="form-img w-1/2">
+        <img className="form_img mt-11 w-full  object-cover " src={loginimg} alt="" />
+      </div>
+      {/* form code */}
+    <div className="bg-white-300 w-1/2">
+      <div className="rounded-lg bg-white  text-center shadow_md">
         <Heading label={"Sign up"} />
         <SubHeading label={"Enter your infromation to create an account"} />
        
