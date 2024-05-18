@@ -139,7 +139,7 @@
   font-size: 2rem;
   margin-bottom: 2rem;
 }
-/* input box                        */
+/*                                                  input box                        */
 .input_box{
   margin:2rem;
 }
@@ -159,7 +159,10 @@
   width: 50%;
   margin-left: 8rem;
   padding: 2.5rem;
+  margin-top: 1rem;
 }
 .shadow_md:hover{
   box-shadow: 0px 5px 15px rgba(255, 79, 90, 0.4), 0px 10px 20px rgba(255, 79, 90, 0.2);
 }
+
+
