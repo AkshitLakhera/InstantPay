@@ -1,0 +1,157 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color tokens to match coral/red fintech design brief */
+  --background: oklch(1 0 0); /* #ffffff - white */
+  --foreground: oklch(0.27 0 0); /* #374151 - dark gray */
+  --card: oklch(0.99 0.01 15); /* #fef2f2 - light coral */
+  --card-foreground: oklch(0.27 0 0); /* #374151 - dark gray */
+  --popover: oklch(1 0 0); /* #ffffff - white */
+  --popover-foreground: oklch(0.27 0 0); /* #374151 - dark gray */
+  --primary: oklch(0.55 0.22 27); /* #dc2626 - red-600 primary */
+  --primary-foreground: oklch(1 0 0); /* #ffffff - white */
+  --secondary: oklch(0.68 0.19 70); /* #f59e0b - golden yellow accent */
+  --secondary-foreground: oklch(1 0 0); /* #ffffff - white */
+  --muted: oklch(0.99 0.01 15); /* #fef2f2 - light coral */
+  --muted-foreground: oklch(0.27 0 0); /* #374151 - dark gray */
+  --accent: oklch(0.68 0.19 70); /* #f59e0b - golden yellow */
+  --accent-foreground: oklch(1 0 0); /* #ffffff - white */
+  --destructive: oklch(0.55 0.22 27); /* #dc2626 - red for destructive actions */
+  --destructive-foreground: oklch(1 0 0); /* #ffffff - white */
+  --border: oklch(0.92 0 0); /* #e5e7eb - light gray border */
+  --input: oklch(1 0 0); /* #ffffff - white input background */
+  --ring: oklch(0.55 0.22 27 / 0.5); /* rgba(220, 38, 38, 0.5) - red focus ring */
+  --chart-1: oklch(0.55 0.22 27); /* #dc2626 - primary red */
+  --chart-2: oklch(0.68 0.19 70); /* #f59e0b - golden yellow */
+  --chart-3: oklch(0.35 0 0); /* #4b5563 - medium gray */
+  --chart-4: oklch(0.99 0.01 15); /* #fef2f2 - light coral */
+  --chart-5: oklch(0.27 0 0); /* #374151 - dark gray */
+  --radius: 0.5rem; /* 8px corner rounding */
+  --sidebar: oklch(0.99 0.01 15); /* #fef2f2 - light coral */
+  --sidebar-foreground: oklch(0.27 0 0); /* #374151 - dark gray */
+  --sidebar-primary: oklch(0.55 0.22 27); /* #dc2626 - red primary */
+  --sidebar-primary-foreground: oklch(1 0 0); /* #ffffff - white */
+  --sidebar-accent: oklch(0.68 0.19 70); /* #f59e0b - golden yellow */
+  --sidebar-accent-foreground: oklch(1 0 0); /* #ffffff - white */
+  --sidebar-border: oklch(0.92 0 0); /* #e5e7eb - light gray */
+  --sidebar-ring: oklch(0.55 0.22 27 / 0.5); /* rgba(220, 38, 38, 0.5) - red focus ring */
+}
+
+.dark {
+  /* Updated dark mode tokens to complement the coral/red theme */
+  --background: oklch(0.11 0 0); /* #1c1c1c - very dark background */
+  --foreground: oklch(0.98 0 0); /* #fafafa - light text */
+  --card: oklch(0.15 0 0); /* #262626 - dark card */
+  --card-foreground: oklch(0.98 0 0); /* #fafafa - light text */
+  --popover: oklch(0.11 0 0); /* #1c1c1c - dark popover */
+  --popover-foreground: oklch(0.98 0 0); /* #fafafa - light text */
+  --primary: oklch(0.65 0.2 27); /* #ef4444 - lighter red for dark mode */
+  --primary-foreground: oklch(0.11 0 0); /* #1c1c1c - dark text on red */
+  --secondary: oklch(0.25 0 0); /* #404040 - dark secondary */
+  --secondary-foreground: oklch(0.98 0 0); /* #fafafa - light text */
+  --muted: oklch(0.25 0 0); /* #404040 - dark muted */
+  --muted-foreground: oklch(0.71 0 0); /* #b5b5b5 - medium gray text */
+  --accent: oklch(0.25 0 0); /* #404040 - dark accent */
+  --accent-foreground: oklch(0.98 0 0); /* #fafafa - light text */
+  --destructive: oklch(0.5 0.2 27); /* #dc2626 - red destructive */
+  --destructive-foreground: oklch(0.65 0.2 27); /* #ef4444 - lighter red text */
+  --border: oklch(0.25 0 0); /* #404040 - dark border */
+  --input: oklch(0.25 0 0); /* #404040 - dark input */
+  --ring: oklch(0.44 0 0); /* #707070 - medium gray ring */
+  --chart-1: oklch(0.65 0.2 27); /* #ef4444 - lighter red */
+  --chart-2: oklch(0.78 0.15 70); /* #fbbf24 - lighter yellow */
+  --chart-3: oklch(0.77 0.19 70); /* #f59e0b - golden yellow */
+  --chart-4: oklch(0.63 0.27 304); /* #c084fc - purple */
+  --chart-5: oklch(0.65 0.25 16); /* #fb7185 - pink */
+  --sidebar: oklch(0.2 0 0); /* #333333 - dark sidebar */
+  --sidebar-foreground: oklch(0.98 0 0); /* #fafafa - light text */
+  --sidebar-primary: oklch(0.65 0.2 27); /* #ef4444 - lighter red */
+  --sidebar-primary-foreground: oklch(0.98 0 0); /* #fafafa - light text */
+  --sidebar-accent: oklch(0.25 0 0); /* #404040 - dark accent */
+  --sidebar-accent-foreground: oklch(0.98 0 0); /* #fafafa - light text */
+  --sidebar-border: oklch(0.25 0 0); /* #404040 - dark border */
+  --sidebar-ring: oklch(0.44 0 0); /* #707070 - medium gray ring */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Added custom font variables for Playfair Display and Source Sans Pro */
+  --font-sans: var(--font-source-sans-pro);
+  --font-serif: var(--font-playfair-display);
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Added custom typography styles for fintech aesthetic */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif font-bold;
+  }
+
+  .fintech-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary;
+  }
+
+  .card-shadow {
+    box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.1), 0 2px 4px -1px rgba(220, 38, 38, 0.06);
+  }
+
+  .hover-lift {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.15), 0 10px 10px -5px rgba(220, 38, 38, 0.04);
+  }
+}

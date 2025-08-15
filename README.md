@@ -2,6 +2,19 @@
 
 InstantPay is an application designed to facilitate quick and easy money transfers between users. Users can send money to each other using an initial dummy balance. This README provides an overview of the project and instructions for deploying the frontend part of the application using Vercel.
 
+
+## Screenshots
+
+**Landing Page:**  
+![Landing Page](frontend-1.1/public/landing.png)
+
+**Dashboard:**  
+![Dashboard](frontend-1.1/public/dashboard.png) 
+
+
+
+
+
 ## Backend
 
 The backend of InstantPay is built using the following technologies:
