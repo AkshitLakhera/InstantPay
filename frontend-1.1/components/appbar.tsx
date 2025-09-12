@@ -15,11 +15,13 @@ export function Appbar() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("Fetching currentUser...");
         const res = await axios.get("http://localhost:3000/api/v1/user/currentUser", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         })
+        console.log("Response:", res.data);
         setCurrentUser(res.data.firstName)
       } catch (error) {
         console.error("Error fetching data:", error)

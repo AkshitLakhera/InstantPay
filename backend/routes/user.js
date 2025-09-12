@@ -61,32 +61,51 @@ const signinbody = z.object({
   username: z.string().email(),
   password: z.string(),
 });
+// router.post("/signin", async (req, res) => {
+//   const validateuser = signinbody.safeParse(req.body);
+//   if (!validateuser.success) {
+//     return res.status(411).json({ message: "Incorrect inputs" });
+//   }
+//   const user = await User.find({
+//     username: req.body.username,
+//     password: req.body.password,
+//   });
+//   if (user) {
+//     const token = jwt.sign(
+//       {
+//         userId: user._id,
+//       },
+//       JWT_SECRET
+//     );
+
+//     res.json({
+//       token: token,
+//     });
+//     return;
+//   }
+
+//   res.status(404).json({
+//     messsage: "Error while loginin",
+//   });
+// });
 router.post("/signin", async (req, res) => {
   const validateuser = signinbody.safeParse(req.body);
   if (!validateuser.success) {
     return res.status(411).json({ message: "Incorrect inputs" });
   }
-  const user = await User.find({
-    username: req.body.username,
-    password: req.body.passsword,
-  });
-  if (user) {
-    const token = jwt.sign(
-      {
-        userId: user._id,
-      },
-      JWT_SECRET
-    );
 
-    res.json({
-      token: token,
-    });
-    return;
+  const user = await User.findOne({
+    username: req.body.username,
+    password: req.body.password,
+  });
+
+  if (!user) {
+    return res.status(404).json({ message: "Invalid username or password" });
   }
 
-  res.status(404).json({
-    messsage: "Error while loginin",
-  });
+  const token = jwt.sign({ userId: user._id }, JWT_SECRET);
+
+  res.json({ token });
 });
 
 //        Route to update user information
@@ -145,12 +164,13 @@ router.get('/currentUser', authMiddleware, async (req, res) => {
 
   const user = await User.findOne({ _id: userId });
   console.log('user:', user); // Log user object to check if it's null or contains the expected user data
-
+  console.log("userId from middleware:", userId);
   if (!user) {
       return res.status(404).json({ message: 'User not found' });
   }
 
   return res.json({ firstName: user.firstName });
 });
+
 
 module.exports = router;

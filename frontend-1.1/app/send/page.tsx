@@ -23,7 +23,7 @@ const steps: TransferStep[] = [
 ]
 
 export default function SendMoneyPage() {
-  const [searchParams] = useSearchParams()
+  const searchParams = useSearchParams()
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
   const [amount, setAmount] = useState("")

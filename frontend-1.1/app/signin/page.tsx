@@ -39,7 +39,7 @@ export default function SigninPage() {
         username,
         password,
       })
-
+      console.log("✅ Signin success, backend response:", response.data)
       localStorage.setItem("token", response.data.token)
       router.push("/dashboard")
     } catch (error) {
