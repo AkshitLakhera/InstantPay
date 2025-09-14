@@ -1,6 +1,6 @@
 // Note- Always import middleware at end of importing series
 const express = require("express");
-const { Account }  = require("../db");
+const { Account,Transaction }  = require("../db");
 const { default: mongoose } = require("mongoose");
 const router = express.Router();
 const { authMiddleware } = require('../middleware');
@@ -21,7 +21,7 @@ router.post("/transfer", authMiddleware, async (req, res) => {
     try {
         const session = await mongoose.startSession();
         session.startTransaction();
-        const { to, amount } = req.body;
+        const { to, amount,note } = req.body;
         console.log("Amount:", amount); // Log the amount to check if it's valid
         const account = await Account.findOne({ userId: req.userId }).session(session);
         if (!account || account.balance < amount) {
@@ -43,9 +43,17 @@ router.post("/transfer", authMiddleware, async (req, res) => {
         await Account.updateOne({ userId: to }, {
             $inc: { balance: +amount }
         });
+    // Record transaction
+    const transaction = await Transaction.create({
+        fromUser: req.userId,
+        toUser: to,
+        amount,
+        note,
+      });
         await session.commitTransaction();
         res.json({
-            message: "Transfer successful"
+            message: "Transfer successful",
+            transaction,
         });
     } catch (error) {
         console.error("Transfer error:", error); // Log any errors for debugging
@@ -54,5 +62,30 @@ router.post("/transfer", authMiddleware, async (req, res) => {
         });
     }
 });
+//route to get history of transaction
+router.get("/transactions/history", authMiddleware, async (req, res) => {
+    const userId = req.userId;
+  
+    try {
+      const transactions = await Transaction.find({
+        $or: [{ fromUser: userId }, { toUser: userId }],
+      })
+        .populate("fromUser", "firstName lastName")
+        .populate("toUser", "firstName lastName")
+        .sort({ date: -1 }); // latest first
+  
+      res.json({ 
+        success: true,
+        userId: req.userId,
+        transactions 
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ 
+        success: false,
+        message: "Internal server error" 
+      });
+    }
+  });
 
 module.exports=router;

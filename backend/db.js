@@ -47,12 +47,46 @@ const accountSchema = new mongoose.Schema({
         required:true
     }
 
-})
+},
+{ timestamps: true });
+//transaction schema
+const transactionSchema = new mongoose.Schema({
+    fromUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    toUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    amount: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    note: {
+      type: String,
+      default: "",
+    },
+    status: {
+      type: String,
+      enum: ["pending", "completed", "failed"],
+      default: "completed"
+    }
+  });
 //creating mongoose modal
  const User =  mongoose.model("User",userSchema);
  const Account = mongoose.model("Account",accountSchema);
+ const Transaction=mongoose.model("Transaction",transactionSchema);
 //  Exporting mongoose modal
 module.exports= {
     User,
-    Account
+    Account,
+    Transaction
 }

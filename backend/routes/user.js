@@ -61,33 +61,7 @@ const signinbody = z.object({
   username: z.string().email(),
   password: z.string(),
 });
-// router.post("/signin", async (req, res) => {
-//   const validateuser = signinbody.safeParse(req.body);
-//   if (!validateuser.success) {
-//     return res.status(411).json({ message: "Incorrect inputs" });
-//   }
-//   const user = await User.find({
-//     username: req.body.username,
-//     password: req.body.password,
-//   });
-//   if (user) {
-//     const token = jwt.sign(
-//       {
-//         userId: user._id,
-//       },
-//       JWT_SECRET
-//     );
 
-//     res.json({
-//       token: token,
-//     });
-//     return;
-//   }
-
-//   res.status(404).json({
-//     messsage: "Error while loginin",
-//   });
-// });
 router.post("/signin", async (req, res) => {
   const validateuser = signinbody.safeParse(req.body);
   if (!validateuser.success) {

@@ -26,62 +26,103 @@ export default function HistoryPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [dateRange, setDateRange] = useState("all")
 
-  // Mock data - replace with actual API call
+  // // Mock data - replace with actual API call
+  // useEffect(() => {
+  //   const mockTransactions: Transaction[] = [
+  //     {
+  //       id: "1",
+  //       type: "sent",
+  //       amount: 1500,
+  //       recipient: "John Doe",
+  //       date: "2024-01-15T10:30:00Z",
+  //       status: "completed",
+  //       note: "Lunch payment",
+  //     },
+  //     {
+  //       id: "2",
+  //       type: "received",
+  //       amount: 2500,
+  //       sender: "Alice Smith",
+  //       date: "2024-01-14T15:45:00Z",
+  //       status: "completed",
+  //       note: "Freelance work",
+  //     },
+  //     {
+  //       id: "3",
+  //       type: "sent",
+  //       amount: 750,
+  //       recipient: "Bob Wilson",
+  //       date: "2024-01-13T09:15:00Z",
+  //       status: "pending",
+  //       note: "Movie tickets",
+  //     },
+  //     {
+  //       id: "4",
+  //       type: "received",
+  //       amount: 5000,
+  //       sender: "Company Ltd",
+  //       date: "2024-01-12T14:20:00Z",
+  //       status: "completed",
+  //       note: "Salary advance",
+  //     },
+  //     {
+  //       id: "5",
+  //       type: "sent",
+  //       amount: 300,
+  //       recipient: "Coffee Shop",
+  //       date: "2024-01-11T08:30:00Z",
+  //       status: "failed",
+  //       note: "Coffee subscription",
+  //     },
+  //   ]
+
+  //   setTimeout(() => {
+  //     setTransactions(mockTransactions)
+  //     setLoading(false)
+  //   }, 1000)
+  // }, [])
   useEffect(() => {
-    const mockTransactions: Transaction[] = [
-      {
-        id: "1",
-        type: "sent",
-        amount: 1500,
-        recipient: "John Doe",
-        date: "2024-01-15T10:30:00Z",
-        status: "completed",
-        note: "Lunch payment",
-      },
-      {
-        id: "2",
-        type: "received",
-        amount: 2500,
-        sender: "Alice Smith",
-        date: "2024-01-14T15:45:00Z",
-        status: "completed",
-        note: "Freelance work",
-      },
-      {
-        id: "3",
-        type: "sent",
-        amount: 750,
-        recipient: "Bob Wilson",
-        date: "2024-01-13T09:15:00Z",
-        status: "pending",
-        note: "Movie tickets",
-      },
-      {
-        id: "4",
-        type: "received",
-        amount: 5000,
-        sender: "Company Ltd",
-        date: "2024-01-12T14:20:00Z",
-        status: "completed",
-        note: "Salary advance",
-      },
-      {
-        id: "5",
-        type: "sent",
-        amount: 300,
-        recipient: "Coffee Shop",
-        date: "2024-01-11T08:30:00Z",
-        status: "failed",
-        note: "Coffee subscription",
-      },
-    ]
-
-    setTimeout(() => {
-      setTransactions(mockTransactions)
-      setLoading(false)
-    }, 1000)
-  }, [])
-
+    const fetchTransactions = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/v1/account/transactions/history", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // token from login
+          },
+        });
+        console.log("Response status:", res.status);
+        const data = await res.json();
+        console.log("data",data);
+        if (res.ok) {
+          // Transform backend data into your frontend Transaction interface
+          const mapped = data.transactions.map((t: any) => {
+            const isSent = t.fromUser._id === data.userId;
+            return {
+              id: t._id,
+              type: isSent ? "sent" : "received",
+              amount: t.amount,
+              recipient: isSent ? t.toUser?.firstName || "Unknown" : undefined,
+              sender: !isSent ? t.fromUser?.firstName || "Unknown" : undefined,
+              date: t.date || t.createdAt,
+              status: "completed",
+              note: t.note,
+            };
+          });
+  
+          setTransactions(mapped);
+        } else {
+          console.error("Error:", data.message);
+        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchTransactions();
+  }, []);
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesFilter = filter === "all" || transaction.type === filter
     const matchesSearch =
