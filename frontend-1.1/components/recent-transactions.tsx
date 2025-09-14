@@ -2,36 +2,94 @@
 
 import { motion } from "framer-motion"
 import { ArrowUpRight, ArrowDownLeft, Clock } from "lucide-react"
-
+import { useRouter } from "next/navigation";
+import { useEffect ,useState} from "react";
+interface Transaction {
+  id: string
+  type: "sent" | "received"
+  amount: number
+  recipient?: string
+  sender?: string
+  date: string
+  status: "completed" | "pending" | "failed"
+  note?: string
+}
 export function RecentTransactions() {
+   const [transactions, setTransactions] = useState<Transaction[]>([])
+   const [loading, setLoading] = useState(true);
+   const router=useRouter();
+   const handleViewClick = () => {
+    router.push("/history")
+  }
   // Mock data - replace with actual API call
-  const transactions = [
-    {
-      id: 1,
-      type: "sent",
-      amount: 1500,
-      recipient: "John Doe",
-      date: "2024-01-15",
-      status: "completed",
-    },
-    {
-      id: 2,
-      type: "received",
-      amount: 2500,
-      sender: "Alice Smith",
-      date: "2024-01-14",
-      status: "completed",
-    },
-    {
-      id: 3,
-      type: "sent",
-      amount: 750,
-      recipient: "Bob Wilson",
-      date: "2024-01-13",
-      status: "pending",
-    },
-  ]
-
+  useEffect(() => {
+      const fetchTransactions = async () => {
+        try {
+          const res = await fetch("http://localhost:3000/api/v1/account/transactions/history", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`, // token from login
+            },
+          });
+          console.log("Response status:", res.status);
+          const data = await res.json();
+          console.log("data",data);
+          if (res.ok) {
+            // Transform backend data into your frontend Transaction interface
+            const mapped = data.transactions.map((t: any) => {
+              const isSent = t.fromUser._id === data.userId;
+              return {
+                id: t._id,
+                type: isSent ? "sent" : "received",
+                amount: t.amount,
+                recipient: isSent ? t.toUser?.firstName || "Unknown" : undefined,
+                sender: !isSent ? t.fromUser?.firstName || "Unknown" : undefined,
+                date: t.date || t.createdAt,
+                status: "completed",
+                note: t.note,
+              };
+            });
+    
+            setTransactions(mapped);
+          } else {
+            console.error("Error:", data.message);
+          }
+        } catch (err) {
+          console.error("Fetch error:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+    
+      fetchTransactions();
+    }, []);
+  // const transactions = [
+  //   {
+  //     id: 1,
+  //     type: "sent",
+  //     amount: 1500,
+  //     recipient: "John Doe",
+  //     date: "2024-01-15",
+  //     status: "completed",
+  //   },
+  //   {
+  //     id: 2,
+  //     type: "received",
+  //     amount: 2500,
+  //     sender: "Alice Smith",
+  //     date: "2024-01-14",
+  //     status: "completed",
+  //   },
+  //   {
+  //     id: 3,
+  //     type: "sent",
+  //     amount: 750,
+  //     recipient: "Bob Wilson",
+  //     date: "2024-01-13",
+  //     status: "pending",
+  //   },
+  // ]
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -41,7 +99,7 @@ export function RecentTransactions() {
     >
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-serif font-bold text-foreground">Recent Transactions</h3>
-        <button className="text-sm text-primary hover:text-primary/80 font-medium">View All</button>
+        <button className="text-sm text-primary hover:text-primary/80 font-medium" onClick={handleViewClick}>View All</button>
       </div>
 
       <div className="space-y-4">
@@ -71,7 +129,7 @@ export function RecentTransactions() {
                 </p>
                 <p className="text-xs text-muted-foreground flex items-center gap-1">
                   <Clock className="w-3 h-3" />
-                  {transaction.date}
+                  {new Date(transaction.date).toLocaleString()}
                 </p>
               </div>
             </div>
