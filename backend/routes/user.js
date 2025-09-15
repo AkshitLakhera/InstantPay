@@ -91,17 +91,16 @@ const updateBody = z.object({
   password: z.string().optional(),
 });
 
-router.put("/", authMiddleware, async (req, res) => {
+router.put("/info/update", authMiddleware, async (req, res) => {
   const validateuser = updateBody.safeParse(req.body);
   if (!validateuser.success) {
     res.status(411).json({
       message: "Error while updating information",
     });
   }
+  const updateData = validateuser.data; 
   // updateOne function in mongoose take id (unique) as input ,it identify which user we have to update
-  await User.updateOne(req.body, {
-    _id: req.userId,
-  });
+  await User.updateOne({ _id: req.userId }, { $set: updateData });
   res.json({
     message: "Updated successfully",
   });

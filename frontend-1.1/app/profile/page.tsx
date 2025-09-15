@@ -67,7 +67,7 @@ export default function ProfilePage() {
 
     setSaving(true)
     try {
-      await axios.put("http://localhost:3000/api/v1/user/profile", editForm, {
+      await axios.put("http://localhost:3000/api/v1/user/info/update", editForm, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
