@@ -1,4 +1,5 @@
 import type React from "react"
+import { ThemeProvider } from "@/components/theme-provider"
 import { Playfair_Display, Source_Sans_3 as Source_Sans_Pro } from "next/font/google"
 import "./globals.css"
 import { ToastProvider } from "../components/toast"
@@ -24,14 +25,22 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${playfairDisplay.variable} ${sourceSansPro.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning  className={`${playfairDisplay.variable} ${sourceSansPro.variable} antialiased` }>
       <body>
+      <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+            
+          >
         <ToastProvider>
           <PageTransition>
             {children}
             <Footer />
           </PageTransition>
         </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

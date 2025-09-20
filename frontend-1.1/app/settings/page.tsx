@@ -9,12 +9,13 @@ import { InputBox } from "../../components/input-box"
 import { Heading } from "../../components/heading"
 import { SubHeading } from "../../components/sub-heading"
 import { Appbar } from "../../components/appbar"
+import { useTheme } from "next-themes"
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("security")
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
-  const [darkMode, setDarkMode] = useState(false)
+  const { theme, setTheme } = useTheme()
   const [notifications, setNotifications] = useState({
     email: true,
     push: true,
@@ -104,7 +105,7 @@ export default function SettingsPage() {
                 {activeTab === "notifications" && (
                   <NotificationSettings notifications={notifications} setNotifications={setNotifications} />
                 )}
-                {activeTab === "preferences" && <PreferenceSettings darkMode={darkMode} setDarkMode={setDarkMode} />}
+                {activeTab === "preferences" && <PreferenceSettings theme={theme} setTheme={setTheme}   />}
                 {activeTab === "payment" && <PaymentSettings />}
               </div>
             </motion.div>
@@ -258,7 +259,8 @@ function NotificationSettings({ notifications, setNotifications }: any) {
   )
 }
 
-function PreferenceSettings({ darkMode, setDarkMode }: any) {
+function PreferenceSettings({ theme, setTheme }: any) {
+  const isDark = theme === "dark"
   return (
     <div className="space-y-6">
       <div>
@@ -269,7 +271,7 @@ function PreferenceSettings({ darkMode, setDarkMode }: any) {
       <div className="space-y-4">
         <div className="flex items-center justify-between p-4 bg-background/50 rounded-lg border border-border/30">
           <div className="flex items-center gap-3">
-            {darkMode ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+            {isDark ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             <div>
               <p className="font-medium">Dark Mode</p>
               <p className="text-sm text-muted-foreground">Switch between light and dark themes</p>
@@ -277,13 +279,13 @@ function PreferenceSettings({ darkMode, setDarkMode }: any) {
           </div>
           <motion.button
             whileTap={{ scale: 0.95 }}
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={() => setTheme(isDark ? "light" : "dark")}
             className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${
-              darkMode ? "bg-primary" : "bg-muted"
+              isDark ? "bg-primary" : "bg-muted"
             }`}
           >
             <motion.div
-              animate={{ x: darkMode ? 24 : 2 }}
+              animate={{ x: isDark ? 24 : 2 }}
               transition={{ duration: 0.2 }}
               className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-md"
             />
